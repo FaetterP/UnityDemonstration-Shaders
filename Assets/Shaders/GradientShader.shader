@@ -1,4 +1,4 @@
-Shader "Custom/SurfaceShader"
+Shader "Custom/GradientShader"
 {
     Properties
     {
@@ -33,9 +33,9 @@ Shader "Custom/SurfaceShader"
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
 
-            fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-            float gray = c.r * 0.333 + c.g * 0.333 + c.b * 0.333;
-            o.Albedo = (gray, gray, gray);
+            fixed4 c = tex2D(_MainTex, IN.uv_MainTex);
+            c = lerp(c, _Color, IN.uv_MainTex.x);
+            o.Albedo = c;
 
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
